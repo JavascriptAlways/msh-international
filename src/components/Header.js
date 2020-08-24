@@ -1,21 +1,21 @@
 import React, { Fragment } from 'react';
 import NavBar from './NavBar';
 import { Link } from 'react-router-dom';
-import {LogoUrl} from '../constants';
+import { LogoUrl } from '../constants';
 
 function Header() {
     return (
         <Fragment>
             <div className="alert alert-danger fade in">
                 <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <p>Our Promise to you During Covid-19 <span className="bg-arrow-wht"><img src="images/arrow-wht.png" /></span></p>
+                <p>Our Promise to you During Covid-19 <span className="bg-arrow-wht"><img src="images/arrow-wht.png" alt="arrow" /></span></p>
 
             </div>
 
             <div className="navigation-section">
                 <div className="container-fluid">
                     <div className="top-main-header">
-                        <div className="logo"><Link to="/"><img src={LogoUrl} /></Link></div>
+                        <div className="logo"><Link to="/"><img src={LogoUrl} alt="logo"/></Link></div>
                         <div className="top-left-sec">
                             <ul className="navbar-nav">
                                 <li className="nav-item dropdown">

@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import ReactTable from "react-table-6";
 import "react-table-6/react-table.css";
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProductCategoryList } from '../../redux/products/products.action';
 import Header from '../../components/Header';
@@ -18,7 +19,6 @@ class MaterialTableExample extends React.Component {
 
   render() {
     const { productCategoryList } = this.props;
-    console.log("my values are", productCategoryList);
     const columns = [
       {
         Header: "Id",
@@ -78,6 +78,8 @@ class MaterialTableExample extends React.Component {
       },
     ];
 
+    const { history } = this.props;
+
     return (
       <Fragment>
         <Header />
@@ -87,7 +89,7 @@ class MaterialTableExample extends React.Component {
               <div className="top-grid-heading">
                 <h5>Product Category listing</h5>
                 <div className="top-grid-btns">
-                  <button type="button" onclick="location.href='edit-product-category.html';" className="btn red-btn-sec"><i className="fa fa-user-plus" aria-hidden="true"></i> Add New Category</button>
+                  <button type="button" onClick={() => history.push("/add-product-category")} className="btn red-btn-sec"><i className="fa fa-user-plus" aria-hidden="true"></i> Add New Category</button>
                   <button type="button" className="btn green-btn-sec"><i className="fa fa-file-excel-o" aria-hidden="true"></i> Export</button>
                   <span className="sp-wht-btn">
                     Show All
@@ -128,4 +130,4 @@ const mapDispatchToProps = dispatch => ({
   getProductCategoryList: () => dispatch(getProductCategoryList())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MaterialTableExample);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MaterialTableExample));

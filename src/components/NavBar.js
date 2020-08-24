@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function NavBar() {
     const [cmsMenuAreaExpanded, setCmsMenuAreaExpanded] = useState(false);
@@ -32,12 +33,12 @@ function NavBar() {
                         CMS <i className="fa fa-angle-down" aria-hidden="true"></i>
                     </a>
                     <div className={`dropdown-menu ${cmsMenuDisplayClass}`} aria-labelledby="navbarDropdownMenuLink">
-                        <a className="dropdown-item" href="product-category-listing.html">Product Category</a>
-                        <a className="dropdown-item" href="product-listing.html">Products</a>
-                        <a className="dropdown-item" href="recommendation-wizard-listing.html">Recommendation Wizard</a>
-                        <a className="dropdown-item" href="screen-listing.html">Page content and attributes</a>
-                        <a className="dropdown-item" href="user-listing.html">User Management</a>
-                        <a className="dropdown-item" href="role-listing.html">Role Management</a>
+                        <Link className="dropdown-item" to="/product-category-listing">Product Category</Link>
+                        <a className="dropdown-item" href="#">Products</a>
+                        <a className="dropdown-item" href="#">Recommendation Wizard</a>
+                        <a className="dropdown-item" href="#">Page content and attributes</a>
+                        <a className="dropdown-item" href="#">User Management</a>
+                        <a className="dropdown-item" href="#">Role Management</a>
                     </div>
                 </li>
             </ul>
