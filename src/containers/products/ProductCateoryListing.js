@@ -5,16 +5,17 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProductCategoryList } from '../../redux/products/products.action';
 import Header from '../../components/Header';
+import isEmpty from '../../isEmpty';
 
 class MaterialTableExample extends React.Component {
 
   componentDidMount() {
-    const { getProductCategoryList } = this.props;
+    const { getProductCategoryList, token, history } = this.props;
+    if(isEmpty(token) || token==null)
+    {
+      history.push('/login');
+    }
     getProductCategoryList();
-  }
-
-  handleSubmit(props) {
-    console.log("props are", props);
   }
 
   render() {
@@ -70,7 +71,7 @@ class MaterialTableExample extends React.Component {
                 <label for="switch-orange-7" className="lbl-off"><i className="fa fa-close"></i></label>
                 <label for="switch-orange-7" className="lbl-on"><i className="fa fa-check" aria-hidden="true"></i></label>
               </span>
-              <span className="edit-icon-grid"><i className="fa fa-pencil" aria-hidden="true"></i></span>
+              <span className="edit-icon-grid" onClick={() => history.push('/edit-product-category')}><i className="fa fa-pencil" aria-hidden="true"></i></span>
               <span className="del-icon-grid"><i className="fa fa-trash-o" aria-hidden="true"></i></span>
             </span>
           );
@@ -123,7 +124,9 @@ class MaterialTableExample extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  productCategoryList: state.productCategory.productCategoryList
+  productCategoryList: state.productCategory.productCategoryList,
+  isAuthenticated: state.auth.isAuthenticated,
+  token: state.auth.token
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,32 +1,56 @@
 import axios from "axios";
+import { tokenConfig } from "../auth/auth.actions";
+import { returnErrors } from "../errors.actions";
 
 import {
-    GET_PRODUCT_CATGORY_LISTING_SUCCESS,
-    GET_PRODUCT_CATGORY_LISTING_ERROR,
-    GET_FEATURED_PRODUCT_SUCCESS,
-    GET_FEATURED_PRODUCT_ERROR,
-    GET_PARENT_CATEGORY_SUCCESS,
-    GET_PARENT_CATEGORY_ERROR
-} from '../types';
-import { ProductCategoryUrl, FeaturedProductUrl, ParentCategoryUrl } from '../api-constants';
-export const getProductCategoryList = () => {
-    return (dispatch) => {
-        axios.get(ProductCategoryUrl)
-            .then(res => dispatch({ type: GET_PRODUCT_CATGORY_LISTING_SUCCESS, payload: res.data }))
-            .catch(error => dispatch({ type: GET_PRODUCT_CATGORY_LISTING_ERROR, payload: { status: 'error', msg: error } }));
-    }
+  GET_PRODUCT_CATGORY_LISTING,
+  GET_FEATURED_PRODUCT,
+  GET_PARENT_CATEGORY,
+  GET_ADD_PRODUCT_CATEGORY,
+} from "../types";
+import {
+  ProductCategoryUrl,
+  FeaturedProductUrl,
+  ParentCategoryUrl,
+  AddProductUrl,
+} from "../api-constants";
+export const getProductCategoryList = () => (dispatch) => {
+  axios
+    .get(ProductCategoryUrl, tokenConfig())
+    .then((res) =>
+      dispatch({
+        type: GET_PRODUCT_CATGORY_LISTING,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
-export const getFeaturedProductList = () => {
-    return (dispatch) => {
-        axios.get(FeaturedProductUrl)
-            .then(res => dispatch({ type: GET_FEATURED_PRODUCT_SUCCESS, payload: res.data }))
-            .catch(error => dispatch({ type: GET_FEATURED_PRODUCT_ERROR, payload: { status: 'error', msg: error } }));
-    }
+export const getFeaturedProductList = () => (dispatch) => {
+  axios
+    .get(FeaturedProductUrl, tokenConfig())
+    .then((res) => dispatch({ type: GET_FEATURED_PRODUCT, payload: res.data }))
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
-export const getParentCategoryList = () => {
-    return (dispatch) => {
-        axios.get(ParentCategoryUrl)
-            .then(res => dispatch({ type: GET_PARENT_CATEGORY_SUCCESS, payload: res.data }))
-            .catch(error => dispatch({ type: GET_PARENT_CATEGORY_ERROR, payload: { status: 'error', msg: error } }));
-    }
+export const getParentCategoryList = () => (dispatch) => {
+  axios
+    .get(ParentCategoryUrl, tokenConfig())
+    .then((res) => dispatch({ type: GET_PARENT_CATEGORY, payload: res.data }))
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+export const addProductCategory = (data) => (dispatch) => {
+    axios
+      .post(AddProductUrl, data, tokenConfig())
+      .then((res) =>
+        dispatch({ type: GET_ADD_PRODUCT_CATEGORY, payload: res.data })
+      )
+      .catch((err) =>
+        dispatch(returnErrors(err.response.data, err.response.status))
+      );
 };

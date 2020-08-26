@@ -257,6 +257,7 @@ body {
     font-weight: 500;
     color: #6d90a0;
     text-transform:uppercase;
+	
 }
 .top-nav-rht-sec button.submit-top-btn:hover, .top-nav-rht-sec button.submit-top-btn:focus{
     color:#e15915;
@@ -961,7 +962,9 @@ div.dataTables_wrapper div.dataTables_filter input {
     margin-right: 5px;
 }
 .top-nav-rht-sec{
-    float:right;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
 }
 .navbar-nav {
     width: 73.8%;

@@ -1,14 +1,16 @@
 import axios from "axios";
+import { tokenConfig } from "../auth/auth.actions";
+import { returnErrors } from "../errors.actions";
 
-import {
-    GET_LANGUAGE_SUCCESS,
-    GET_LANGUAGE_ERROR,
-} from '../types';
-import { LanguageUrl } from '../api-constants';
-export const getLanuageList = () => {
-    return (dispatch) => {
-        axios.get(LanguageUrl)
-            .then(res => dispatch({ type: GET_LANGUAGE_SUCCESS, payload: res.data }))
-            .catch(error => dispatch({ type: GET_LANGUAGE_ERROR, payload: { status: 'error', msg: error } }));
-    }
+import { GET_LANGUAGE } from "../types";
+import { LanguageUrl } from "../api-constants";
+export const getLanuageList = () => (dispatch) => {
+  axios
+    .get(LanguageUrl, tokenConfig())
+    .then((res) => {
+      dispatch({ type: GET_LANGUAGE, payload: res.data });
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };

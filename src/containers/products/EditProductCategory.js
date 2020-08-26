@@ -23,8 +23,6 @@ function AddProductCategory(props) {
     lang_eng_description: null,
     lang_french_name: null,
     lang_french_description: null,
-    lang_spanish_name: null,
-    lang_spanish_description: null,
     productToCompareArray: [],
   });
 
@@ -35,23 +33,12 @@ function AddProductCategory(props) {
     return state.language.languageList;
   });
 
-  const { token } = useSelector((state) => {
-    return state.auth;
-  });
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFeaturedProductList());
     dispatch(getParentCategoryList());
     dispatch(getLanuageList());
   }, [dispatch]);
-
-  useEffect(() => {
-    const { history } = props;
-    if (isEmpty(token)) {
-      history.push("/login");
-    }
-  });
 
   const featuredProductsListing = featuredProductList.map((products) => {
     return (
@@ -163,18 +150,8 @@ function AddProductCategory(props) {
         },
       ],
     };
-
     dispatch(addProductCategory(data));
   };
-
-  const handleAnotherLanguage = (e) => {
-    setFormData({
-      ...formData,
-      anotherLanguage: e.target.value,
-    });
-    !isEmpty(e.target.value) ? setShowLanguage(true) : setShowLanguage(false);
-  };
-
   const { history } = props;
   return (
     <Fragment>
@@ -343,9 +320,14 @@ function AddProductCategory(props) {
                       <div className="col-lg-8">
                         <select
                           id="another-language"
+                          onChange={handleChange}
                           name="anotherLanguage"
                           className="form-control"
-                          onChange={handleAnotherLanguage}
+                          onChange={(e) => {
+                            !isEmpty(e.target.value)
+                              ? setShowLanguage(true)
+                              : setShowLanguage(false);
+                          }}
                         >
                           <option value="">Select Your Language</option>
                           {languageListing}
@@ -360,13 +342,7 @@ function AddProductCategory(props) {
                           <tr>
                             <th scope="col">Field Name</th>
                             <th scope="col">English</th>
-                            {formData.anotherLanguage === "2" ? (
-                              <th scope="col">French</th>
-                            ) : (
-                              formData.anotherLanguage === "3" && (
-                                <th scope="col">Spanish</th>
-                              )
-                            )}
+                            <th scope="col">French</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -374,34 +350,22 @@ function AddProductCategory(props) {
                             <td>Name</td>
                             <td>
                               <input
-                                type="text"
+                                type="email"
                                 className="form-control"
                                 id="lang_eng_name"
                                 name="lang_eng_name"
                                 placeholder="Name"
                               />
                             </td>
-                            {formData.anotherLanguage === "2" ? (
-                              <td>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="lang_french_name"
-                                  name="lang_french_name"
-                                  placeholder="Name"
-                                />
-                              </td>
-                            ) : (
-                              <td>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="lang_spanish_name"
-                                  name="lang_spanish_name"
-                                  placeholder="Name"
-                                />
-                              </td>
-                            )}
+                            <td>
+                              <input
+                                type="email"
+                                className="form-control"
+                                id="lang_french_name"
+                                name="lang_french_name"
+                                placeholder="Name"
+                              />
+                            </td>
                           </tr>
                           <tr>
                             <td>Description</td>
@@ -414,27 +378,15 @@ function AddProductCategory(props) {
                                 rows="2"
                               ></textarea>
                             </td>
-                            {formData.anotherLanguage === "2" ? (
-                              <td>
-                                <textarea
-                                  className="form-control"
-                                  id="lang_french_description"
-                                  name="lang_french_description"
-                                  placeholder="Description"
-                                  rows="2"
-                                ></textarea>
-                              </td>
-                            ) : (
-                              <td>
-                                <textarea
-                                  className="form-control"
-                                  id="lang_spanish_description"
-                                  name="lang_spanish_description"
-                                  placeholder="Description"
-                                  rows="2"
-                                ></textarea>
-                              </td>
-                            )}
+                            <td>
+                              <textarea
+                                className="form-control"
+                                id="lang_french_description"
+                                name="lang_french_description"
+                                placeholder="Description"
+                                rows="2"
+                              ></textarea>
+                            </td>
                           </tr>
                         </tbody>
                       </table>

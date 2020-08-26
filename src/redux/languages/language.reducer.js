@@ -4,12 +4,7 @@ const intialState = {
 
 export const languageReducer = (state = intialState, action) => {
     switch (action.type) {
-        case "GET_LANGUAGE_SUCCESS":
-            return {
-                ...state,
-                languageList: action.payload
-            }
-        case "GET_LANGUAGE_ERROR":
+        case "GET_LANGUAGE":
             return {
                 ...state,
                 languageList: action.payload
